@@ -7,12 +7,37 @@
 	<body>
 	</body>
 	<script type="text/javascript">
-		window.onload = function(){
+		//全局调用
+		/*window.onload = function(){
 			test();
 		};
 			function test(){
 				this.x=1;
 				console.log(x);
-			}
+			}*/
+		var a=1;
+		function test(){
+			this.a=2;
+		}
+		test();
+		alert(a);
+		//作为对象方法调用
+		function obj(){
+			document.write(this.x);
+		}
+		var o={};
+		o.x=1;
+		o.m=obj;
+		o.m();
+		//作为构造函数调用
+		var a= 4;
+		function test1(){
+			this.a=3;
+			document.write('<br/> test1'+a);
+		}
+		var o = new test1();
+//		test1();
+		document.write('<br/> o'+o.a);
+		document.write('<br/> quan'+a);
 	</script>
 </html>
