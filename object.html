@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>js 对象的应用</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		//属性描述符
+		//可写性  writable
+		var myObject = {};
+		Object.defineProperty(myObject,'a',{
+			value:2,
+			writable:false,
+			configurable: true,
+			enumerable:true
+		});
+		myObject.a=3;
+		console.log(myObject.a);
+		myObject.a;
+	</script>
+</html>
