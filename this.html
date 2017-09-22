@@ -15,7 +15,7 @@
 				this.x=1;
 				console.log(x);
 			}*/
-		var a=1;
+		/*var a=1;
 		function test(){
 			this.a=2;
 		}
@@ -28,9 +28,9 @@
 		var o={};
 		o.x=1;
 		o.m=obj;
-		o.m();
+		o.m();*/
 		//作为构造函数调用
-		var a= 4;
+		/*var a= 4;
 		function test1(){
 			this.a=3;
 			document.write('<br/> test1'+a);
@@ -38,6 +38,41 @@
 		var o = new test1();
 //		test1();
 		document.write('<br/> o'+o.a);
-		document.write('<br/> quan'+a);
+		document.write('<br/> quan'+a);*/
+		//错误demo
+		/*function foo(){
+			var a=2;
+			this.bar();
+		}
+		function bar(){
+			console.log(this.a);
+		}
+		foo();*/
+		//调用点展示
+		function baz(){
+			console.log('baz');
+			bar();
+		}
+		function bar(){
+			console.log('bar');
+			foo();
+		}
+		function foo(){
+			console.log('foo');
+			
+		}
+		baz();
+		
+		//new绑定和明确绑定之间的判断
+		function foo(something){
+			this.a = something;
+		}
+		var obj1={};
+		var bar = foo.bind(obj1);
+		bar(2);
+		console.log(obj1.a);
+		var baz = new bar(3);
+		console.log(obj1.a);
+		console.log(baz.a)
 	</script>
 </html>
