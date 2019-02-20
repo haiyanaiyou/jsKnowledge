@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>数组去重的实现方式</title>
+	</head>
+	<body>
+		<p>在控制台打印查看</p>
+	</body>
+	<script type="text/javascript">
+		const arr = [1,2,3,3,4,'4',true,true,NaN,NaN,'NaN',{},{}];
+		console.log('arr:',arr);
+		//set方法  无法去重{}
+		function unique1(arr){
+			return Array.from(new Set(arr))
+		}
+		console.log('set:',unique1(arr));
+		
+		// for循环嵌套 + splice  无法去重{} NaN ；并且对相同值不同类型的出重了
+		function unique2(arr){
+			if(!Array.isArray(arr)){
+				console.log('type error');
+				return 
+			}
+			for(let i=0;i < arr.length;i++){
+				for(let j=i+1;j<arr.length;j++){
+					if(arr[i] == arr[j]){
+						arr.splice(j,1);
+						j--
+					}
+				}
+			}
+			return arr
+		}
+		console.log('splice:', unique2(arr));
+		//indexOf NAN直接消失了 去重了相同值但类型不同的数据 无法去重{}
+		function unique3(arr){
+			if(!Array.isArray(arr)){
+				console.log('type error');
+				return
+			}
+			var array =[];
+			for(let i=0;i< arr.length;i++){
+				if(arr.indexOf(arr[i]) !== -1){
+					array.push(arr[i])
+				}
+			}
+			return array
+		}
+		console.log('indexOf:', unique3(arr));
+		//对对象属性的唯一特性进行处理  对值相同类型不同的数据进行去重了
+		function unique4(arr){
+			if(!Array.isArray(arr)){
+				console.log('type error');
+				return
+			}
+			var obj = {};
+			var array=[];
+			for(let i=0;i< arr.length;i++){
+				if(!obj[arr[i]]){
+					array.push(arr[i]);
+					obj[arr[i]] = 1;
+				}else{
+					obj[arr[i]]++
+				}
+			}
+			return array
+		}
+		console.log('对象属性的唯一性：',unique4(arr))
+		
+		//sort（） 无法对NaN {} 去重 并且true直接消失了
+		function unique5(arr){
+			if(!Array.isArray(arr)){
+				console.log('type error');
+				return 
+			}
+			arr = arr.sort();
+			var array =[arr[0]];
+			for(let i =1; i<arr.length;i++){
+				if(arr[i] !== arr[i+1]){
+					array.push(arr[i]);
+				}
+			}
+			return array
+		}
+		console.log('sort:', unique5(arr));
+		
+		//includes（）   {}没有去重
+		function unique6(){
+			if(!Array.isArray(arr)){
+				console.log('type error');
+				return
+			}
+			var array =[];
+			for(let i = 0;i<arr.length; i++){
+				if(!array.includes(arr[i])){
+					array.push(arr[i])
+				}
+			}
+			return array
+		}
+		console.log('includes:',unique6(arr))
+		
+		//hasOwnProperty 判断是否存在对象属性 
+		function unique7(arr){
+			var obj ={};
+			return arr.filter(function(item,index,arr){
+				return obj.hasOwnProperty(typeof item + item)?false: (obj[typeof item + item] = true)
+			})
+		}
+		console.log('hasOwnProperty:',unique7(arr))
+		
+		//filter  无法去重{}
+		function unique8(arr){
+			return arr.filter(function(item,index,arr){
+				return arr.indexOf(item,0)=== index
+			})
+		}
+		console.log('filter:',unique8(arr))
+		
+		//递归去重 无法对NaN {} 去重
+		function unique9(arr){
+			var array = arr;
+			var len = arr.length;
+			array.sort(function(a,b){
+				return a-b
+			})
+			function loop(index){
+				if(index >1){
+					if(array[index] === array[index-1]){
+						array.splice(index,1)
+					}
+					loop(index-1)
+				}
+			}
+			loop(len-1)
+			return array
+		}
+		console.log('递归：', unique9(arr))
+		
+		//map去重
+		function unique10(arr){
+			var map = new Map();
+			var array = new Array();
+			for(let i=0;i<arr.length;i++){
+				if(map.has(arr[i])){
+					map.set(arr[i],true);
+				}else{
+					map.set(arr[i],false);
+					array.push(arr[i]);
+				}
+			}
+			return array
+		}
+		console.log('map:',unique10(arr))
+		
+		//reduce+ includes
+		function unique11(arr){
+			return arr.reduce((prev,cur)=>prev.includes(cur)? prev:[...prev,cur],[]);
+		}
+		console.log('reduce+includes',unique11(arr))
+		
+		//展开运算符结合set
+		function unique12(arr){
+			return [...new Set(arr)]
+		}
+		console.log('展开运算符+set',unique12(arr))
+	</script>
+</html>

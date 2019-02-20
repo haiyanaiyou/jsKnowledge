@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>hasOwnProperty</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		var o = new Object();
+		o.props = 'test';
+		
+		function changeO(){
+			o.newProps = o.props;
+			delete o.props;
+		}
+		console.log(o.hasOwnProperty('props'));
+		changeO();
+		console.log(o.hasOwnProperty('props'))
+	</script>
+</html>
