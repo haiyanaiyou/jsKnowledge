@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		
+		var a = {
+			age:1,
+			name:'yim',
+			home:{
+				address:'beijing'
+			}
+		}
+		var a1= deepClone2(a)
+		a1.home.address='shanghai '
+		console.log(a)
+		console.log(a1)
+		//第一种实现方式
+		function deepClone(obj){
+			let objClone = Array.isArray(obj)?[]:{};
+			if(obj && typeof obj === 'object'){
+				for(key in obj){
+					if(key && obj.hasOwnProperty(key)){
+						if(obj[key] && typeof obj[key] === 'object'){
+							objClone[key] = deepClone(obj[key])
+						}else{
+							objClone[key] = obj[key];
+						}
+					}
+				}
+			}
+			return objClone
+		}
+		//第二种实现
+		function deepClone2(obj){
+			function isObject(o){
+				return (typeof o==='object'||typeof o ==='function')&& o!==null
+			}
+			if(!isObject(obj)){
+				throw new Error('不是一个对象')
+			}
+			var isArray = Array.isArray(obj);
+			var newObj = isArray?[...Obj]:{...obj};
+			Reflect.ownKeys(newObj).forEach(key=>{
+				newObj[key]=isObject(obj[key])?deepClone2(obj[key]):obj[key]
+			})
+			return newObj
+		}
+	</script>
+</html>

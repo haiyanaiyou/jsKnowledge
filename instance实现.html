@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		function canInstance(left,right){
+			var leftPro = left.__proto__
+			var rightPro = right.prototype
+			while(true){
+				if(leftPro === null){
+					return false
+				}
+				if(leftPro === rightPro){
+					return true
+				}
+				leftPro = leftPro.__proto__
+				
+			}
+		}
+		function fn(){}
+		canInstance(fn,Function)
+	</script>
+</html>
